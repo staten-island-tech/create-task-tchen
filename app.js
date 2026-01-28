@@ -20,9 +20,9 @@ const animalFoodPyramid = [
 
 function getRandomNumber() {
   let money = 200;
-  let randomNumber = Math.floor(Math.random() * 1024);
+  let randomNumber = Math.floor(Math.random() * 1010);
   let currentAnimal = "";
-  while (money >= 200) {
+  if (money >= 200) {
     if (randomNumber === 1) {
       currentAnimal = animalFoodPyramid[0][9];
     } else if (randomNumber >= 2 && randomNumber <= 3) {
@@ -43,11 +43,16 @@ function getRandomNumber() {
       currentAnimal = animalFoodPyramid[0][1];
     } else if (randomNumber >= 513 && randomNumber <= 1024) {
       currentAnimal = animalFoodPyramid[0][0];
+    } else {
+      currentAnimal = "";
     }
-    return currentAnimal;
+    console.log(currentAnimal);
   }
   if (money < 200) {
-    console.log("No money");
+    console.log("No money left --- Yikes");
+  }
+  if ((currentAnimal = "")) {
+    console.log("No animal D:");
   }
 }
 getRandomNumber();
