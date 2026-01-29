@@ -19,8 +19,26 @@ const animalFoodPyramid =
 
 let money = 200;
 function getRandomAnimal() {
-  let randomNumber = Math.floor(Math.random() * 1010);
+  let randomNumber = Math.floor(Math.random() * 1100);
   let currentAnimal = "";
+
+  while (
+    currentAnimal === animalFoodPyramid[0].name ||
+    currentAnimal === animalFoodPyramid[1].name ||
+    currentAnimal === animalFoodPyramid[2].name ||
+    currentAnimal === animalFoodPyramid[3].name
+  ) {}
+  while (
+    currentAnimal === animalFoodPyramid[4].name ||
+    currentAnimal === animalFoodPyramid[5].name ||
+    currentAnimal === animalFoodPyramid[6].name
+  ) {}
+  while (
+    currentAnimal === animalFoodPyramid[7].name ||
+    currentAnimal === animalFoodPyramid[8].name
+  ) {}
+  while (currentAnimal === animalFoodPyramid[9].name) {}
+
   if (money >= 200) {
     money -= 200;
     if (randomNumber === 1) {
@@ -56,3 +74,19 @@ function getRandomAnimal() {
   }
 }
 getRandomAnimal();
+
+const animalContainer = document.querySelector(".animals");
+
+function getAnimals(animals) {
+  animalContainer.innerHTML = "";
+  animals.forEach((animal) => {
+    animalContainer.insertAdjacentHTML(
+      "afterbegin",
+      `<div>
+        <p>${animal.name}</p>
+      </div>`,
+    );
+  });
+}
+
+getAnimals(animalFoodPyramid);
