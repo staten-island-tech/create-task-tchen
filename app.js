@@ -112,8 +112,11 @@ getAnimals(animalFoodPyramid);
 let inventory = [];
 
 function addToInventory(newAnimal) {
-  myZoo.push(newAnimal);
-  for (let i = 0; i < myZoo.length; i++) {
-    money -= 10;
+  inventory.push(newAnimal);
+  for (let i = 0; i < inventory.length; i++) {
+    if (newAnimal !== "") {
+        money -= 10;
+    }
   }
+  console.log("Inventory: ", inventory);
 }
