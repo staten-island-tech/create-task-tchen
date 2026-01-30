@@ -19,6 +19,9 @@ const animalFoodPyramid =
 
 const btn = document.querySelector(".btn");
 let money = 2000;
+btn.addEventListener("click", getRandomAnimal);
+const animalContainer = document.querySelector(".animals");
+let inventory = [];
 function getRandomAnimal() {
   let randomNumber = Math.floor(Math.random() * 1100);
   let currentAnimal = "";
@@ -28,7 +31,7 @@ function getRandomAnimal() {
     money -= 200;
     if (randomNumber === 1) {
       currentAnimal = animalFoodPyramid[9].name;
-      money += 50000;
+      money += 5000000;
     } else if (randomNumber >= 2 && randomNumber <= 3) {
       currentAnimal = animalFoodPyramid[8].name;
       money += 14500;
@@ -43,19 +46,19 @@ function getRandomAnimal() {
       money += 13000;
     } else if (randomNumber >= 23 && randomNumber <= 32) {
       currentAnimal = animalFoodPyramid[4].name;
-      money += 190;
+      money += 650;
     } else if (randomNumber >= 33 && randomNumber <= 128) {
       currentAnimal = animalFoodPyramid[3].name;
-      money += 190;
+      money += 650;
     } else if (randomNumber >= 129 && randomNumber <= 256) {
       currentAnimal = animalFoodPyramid[2].name;
-      money += 190;
+      money += 650;
     } else if (randomNumber >= 257 && randomNumber <= 512) {
       currentAnimal = animalFoodPyramid[1].name;
-      money += 190;
+      money += 650;
     } else if (randomNumber >= 513 && randomNumber <= 1024) {
       currentAnimal = animalFoodPyramid[0].name;
-      money += 190;
+      money += 650;
     } else {
       currentAnimal = "";
     }
@@ -92,8 +95,6 @@ function getRandomAnimal() {
 
   console.log(`Money left: $${money}`);
 }
-btn.addEventListener("click", getRandomAnimal);
-const animalContainer = document.querySelector(".animals");
 
 function getAnimals(animals) {
   animalContainer.innerHTML = "";
@@ -109,13 +110,11 @@ function getAnimals(animals) {
 
 getAnimals(animalFoodPyramid);
 
-let inventory = [];
-
 function addToInventory(newAnimal) {
   inventory.push(newAnimal);
   for (let i = 0; i < inventory.length; i++) {
     if (newAnimal !== "") {
-        money -= 10;
+      money -= 10;
     }
   }
   console.log("Inventory: ", inventory);
