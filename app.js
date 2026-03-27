@@ -16,72 +16,55 @@ const animalFoodPyramid = [
   { name: "Large Fish" },
   { name: "Eagle" },
 ];
+const rarityTable = [
+  { min: 1, max: 1, index: 9, reward: 5000000 },
+  { min: 2, max: 3, index: 8, reward: 14500 },
+  { min: 4, max: 6, index: 7, reward: 14000 },
+  { min: 7, max: 12, index: 6, reward: 13500 },
+  { min: 13, max: 22, index: 5, reward: 13000 },
+  { min: 23, max: 32, index: 4, reward: 650 },
+  { min: 33, max: 128, index: 3, reward: 650 },
+  { min: 129, max: 256, index: 2, reward: 650 },
+  { min: 257, max: 512, index: 1, reward: 650 },
+  { min: 513, max: 1024, index: 0, reward: 650 },
+];
 
 const btn = document.querySelector(".btn");
 let money = 2000;
 btn.addEventListener("click", getRandomAnimal);
 const animalContainer = document.querySelector(".animals");
 
+function getColor(index) {
+  if (index <= 3) return "burlywood";
+  if (index <= 6) return "cyan";
+  if (index <= 8) return "purple";
+  if (index === 9) return "gold";
+}
 function getRandomAnimal() {
-  let randomNumber = Math.floor(Math.random() * 1100);
+  let randomNumber = Math.floor(Math.random() * 1024) + 1;
   let currentAnimal = "";
   const colorBox = document.querySelector(".rarity");
 
   if (money >= 200) {
     money -= 200;
-    if (randomNumber === 1) {
-      currentAnimal = animalFoodPyramid[9].name;
-      money += 5000000;
-    } else if (randomNumber >= 2 && randomNumber <= 3) {
-      currentAnimal = animalFoodPyramid[8].name;
-      money += 14500;
-    } else if (randomNumber >= 4 && randomNumber <= 6) {
-      currentAnimal = animalFoodPyramid[7].name;
-      money += 14000;
-    } else if (randomNumber >= 7 && randomNumber <= 12) {
-      currentAnimal = animalFoodPyramid[6].name;
-      money += 13500;
-    } else if (randomNumber >= 13 && randomNumber <= 22) {
-      currentAnimal = animalFoodPyramid[5].name;
-      money += 13000;
-    } else if (randomNumber >= 23 && randomNumber <= 32) {
-      currentAnimal = animalFoodPyramid[4].name;
-      money += 650;
-    } else if (randomNumber >= 33 && randomNumber <= 128) {
-      currentAnimal = animalFoodPyramid[3].name;
-      money += 650;
-    } else if (randomNumber >= 129 && randomNumber <= 256) {
-      currentAnimal = animalFoodPyramid[2].name;
-      money += 650;
-    } else if (randomNumber >= 257 && randomNumber <= 512) {
-      currentAnimal = animalFoodPyramid[1].name;
-      money += 650;
-    } else if (randomNumber >= 513 && randomNumber <= 1024) {
-      currentAnimal = animalFoodPyramid[0].name;
-      money += 650;
-    } else {
-      currentAnimal = "";
+    let selectedIndex = null;
+
+    for (let i = 0; i < rarityTable.length; i++) {
+      const tier = rarityTable[i];
+
+      if (randomNumber >= tier.min && randomNumber <= tier.max) {
+        if (tier.reward > 10000) {
+          console.log("High rarity animal!");
+        }
+        currentAnimal = animalFoodPyramid[tier.index].name;
+        money += tier.reward;
+        selectedIndex = tier.index;
+        break;
+      }
     }
-    if (
-      currentAnimal === animalFoodPyramid[0].name ||
-      currentAnimal === animalFoodPyramid[1].name ||
-      currentAnimal === animalFoodPyramid[2].name ||
-      currentAnimal === animalFoodPyramid[3].name
-    ) {
-      colorBox.style.backgroundColor = "burlywood";
-    } else if (
-      currentAnimal === animalFoodPyramid[4].name ||
-      currentAnimal === animalFoodPyramid[5].name ||
-      currentAnimal === animalFoodPyramid[6].name
-    ) {
-      colorBox.style.backgroundColor = "cyan";
-    } else if (
-      currentAnimal === animalFoodPyramid[7].name ||
-      currentAnimal === animalFoodPyramid[8].name
-    ) {
-      colorBox.style.backgroundColor = "purple";
-    } else if (currentAnimal === animalFoodPyramid[9].name) {
-      colorBox.style.backgroundColor = "gold";
+    if (selectedIndex !== null) {
+      const color = getColor(selectedIndex);
+      colorBox.style.backgroundColor = color;
     }
   } else {
     console.log("Not enough money left --- Yikes");
@@ -113,6 +96,9 @@ let inventory = [];
 function addToInventory(newAnimal) {
   inventory.push(newAnimal);
   for (let i = 0; i < inventory.length; i++) {
+    if (inventory[i] === newAnimal) {
+      console.log("Duplicate animal!");
+    }
     if (newAnimal !== "") {
       money -= 10;
     }
