@@ -1,9 +1,3 @@
-//Starter money
-//Click button to roll
-//If has animal -- Passive money
-//If no animal (getting a 0) -- No money income D:
-//Create a reset/give up button
-
 const animalFoodPyramid = [
   { name: "Zooplankton" },
   { name: "Krill" },
@@ -35,9 +29,9 @@ btn.addEventListener("click", getRandomAnimal);
 const animalContainer = document.querySelector(".animals");
 
 function getColor(index) {
-  if (index <= 3) return "burlywood";
-  if (index <= 6) return "cyan";
-  if (index <= 8) return "purple";
+  if (0 <= index && index <= 3) return "burlywood";
+  if (4 <= index && index <= 6) return "cyan";
+  if (7 <= index && index <= 8) return "purple";
   if (index === 9) return "gold";
 }
 function getRandomAnimal() {
@@ -47,7 +41,7 @@ function getRandomAnimal() {
 
   if (money >= 200) {
     money -= 200;
-    let selectedIndex = null;
+    let selected = null;
 
     for (let i = 0; i < rarityTable.length; i++) {
       const tier = rarityTable[i];
@@ -58,12 +52,12 @@ function getRandomAnimal() {
         }
         currentAnimal = animalFoodPyramid[tier.index].name;
         money += tier.reward;
-        selectedIndex = tier.index;
+        selected = tier.index;
         break;
       }
     }
-    if (selectedIndex !== null) {
-      const color = getColor(selectedIndex);
+    if (selected !== null) {
+      const color = getColor(selected);
       colorBox.style.backgroundColor = color;
     }
   } else {
