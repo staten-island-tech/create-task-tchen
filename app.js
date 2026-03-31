@@ -25,7 +25,9 @@ const rarityTable = [
 
 const btn = document.querySelector(".btn");
 let money = 2000;
-btn.addEventListener("click", getRandomAnimal);
+
+btn.addEventListener("click", () => getRandomAnimal(200));
+
 const animalContainer = document.querySelector(".animals");
 
 function getColor(index) {
@@ -34,26 +36,26 @@ function getColor(index) {
   if (7 <= index && index <= 8) return "purple";
   if (index === 9) return "gold";
 }
-function getRandomAnimal() {
+
+function getRandomAnimal(cost) {
   let randomNumber = Math.floor(Math.random() * 1024) + 1;
   let currentAnimal = "";
   const colorBox = document.querySelector(".rarity");
 
-  if (money >= 200) {
-    money -= 200;
+  if (money >= cost) {
+    money -= cost;
     let selected = null;
-
     for (let i = 0; i < rarityTable.length; i++) {
       const tier = rarityTable[i];
 
       if (randomNumber >= tier.min && randomNumber <= tier.max) {
-        if (tier.reward > 10000) {
-          console.log("High rarity animal!");
+        if (tier.index > 6) {
+          money += tier.reward * 2;
+        } else {
+          money += tier.reward;
         }
         currentAnimal = animalFoodPyramid[tier.index].name;
-        money += tier.reward;
         selected = tier.index;
-        break;
       }
     }
     if (selected !== null) {
@@ -86,16 +88,21 @@ function getAnimals(animals) {
 }
 
 getAnimals(animalFoodPyramid);
+
 let inventory = [];
+
 function addToInventory(newAnimal) {
-  inventory.push(newAnimal);
+  let duplicate = false;
+
   for (let i = 0; i < inventory.length; i++) {
     if (inventory[i] === newAnimal) {
-      console.log("Duplicate animal!");
-    }
-    if (newAnimal !== "") {
-      money -= 10;
+      duplicate = true;
     }
   }
+
+  if (!duplicate) {
+    inventory.push(newAnimal);
+  }
   console.log("Inventory: ", inventory);
+  console.log("New Animal", duplicate);
 }
